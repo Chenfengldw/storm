@@ -85,6 +85,7 @@ public class WordCountTopology {
     builder.setBolt("count", new WordCount(), 12).fieldsGrouping("split", new Fields("word"));
 
     Config conf = new Config();
+    //conf.put
     conf.setDebug(true);
 
     if (args != null && args.length > 0) {

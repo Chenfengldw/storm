@@ -482,7 +482,10 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
-                        <executions>
+                        <configuration>
+        		    <skip>true</skip>
+                        </configuration>
+			<executions>
                             <execution>
                                 <id>sign-artifacts</id>
                                 <phase>verify</phase>
@@ -1131,7 +1134,10 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-gpg-plugin</artifactId>
-                    <version>1.6</version>
+                    <configuration>
+        	        <skip>true</skip>
+                    </configuration>
+		    <version>1.6</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
