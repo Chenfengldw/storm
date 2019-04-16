@@ -174,8 +174,8 @@
       (log-debug "worker " (:worker-id worker) " transfer-queue is congested, set backpressure flag true")
       (WorkerBackpressureThread/notifyBackpressureChecker (:backpressure-trigger worker)))
 
-      ;;( (.interrupt transfer-thread)
-      ;;(.join transfer-thread))
+      ;;(.interrupt transfer-thread)
+      ;;(.join transfer-thread)
 
     (fn []
       (log-debug "worker " (:worker-id worker) " transfer-queue is not congested, set backpressure flag false")
