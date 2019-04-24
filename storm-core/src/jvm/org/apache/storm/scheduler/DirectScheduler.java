@@ -80,7 +80,7 @@ public class DirectScheduler implements IScheduler{
                 // find out all the needs-scheduling components of this topology
                 Map<String, List<ExecutorDetails>> componentToExecutors = cluster.getNeedsSchedulingComponentToExecutors(topology);
 
-                System.out.println("needs scheduling(component->executor): " + componentToExecutors);
+                //System.out.println("needs scheduling(component->executor): " + componentToExecutors);
                 System.out.println("needs scheduling(executor->components): " + cluster.getNeedsSchedulingExecutorToComponents(topology));
                 SchedulerAssignment currentAssignment = cluster.getAssignmentById(topology.getId());
                 if (currentAssignment != null) {
@@ -99,10 +99,8 @@ public class DirectScheduler implements IScheduler{
                         componentName = iterator.next();
                         nodeName = (String)designMap.get(componentName);
                         System.out.println("now scheduling component->node:" + componentName + "->" + nodeName);
-                    
-
+                
                         componentAssign(cluster, topology, componentToExecutors, componentName, nodeName);
-                        usedSlots.add(slotStr);
                     }
                 }
             }
@@ -166,7 +164,10 @@ public class DirectScheduler implements IScheduler{
                 availableSlots = cluster.getAvailableSlots(specialSupervisor);
                 int slotIndex = 0;
                 for(ExecutorDetails exe : executors){
-                    cluster.assign(availableSlots.get(slotIndex), topology.getId(), exe);
+                    List<ExecutorDetails> tmpList = new ArrayList<ExecutorDetails>();
+                    tmpList.add(exe);
+                    cluster.assign(availableSlots.get(slotIndex), topology.getId(), tmpList);
+                    //tmpList.remove(0);
                     slotIndex = (slotIndex+1)%slotNumber;
                 }
                 //cluster.assign(availableSlots.get(slotIndex), topology.getId(), executors);

@@ -95,8 +95,8 @@ public class WordCountTopology {
       assign_map.put("count", "supervisor-cpu13");
 
       conf.setNumWorkers(3);
-      config.put("assigned_flag", "1");
-      config.put("design_map", assign_map);
+      conf.put("assigned_flag", "1");
+      conf.put("design_map", assign_map);
       StormSubmitter.submitTopologyWithProgressBar(args[0], conf, builder.createTopology());
     }
     else {
