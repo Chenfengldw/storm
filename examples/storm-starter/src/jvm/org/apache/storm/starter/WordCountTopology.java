@@ -79,18 +79,24 @@ public class WordCountTopology {
 
     TopologyBuilder builder = new TopologyBuilder();
 
-    builder.setSpout("spout", new RandomSentenceSpout(), 5);
+    builder.setSpout("spout", new RandomSentenceSpout(), 3);
 
-    builder.setBolt("split", new SplitSentence(), 8).shuffleGrouping("spout");
-    builder.setBolt("count", new WordCount(), 12).fieldsGrouping("split", new Fields("word"));
+    builder.setBolt("split", new SplitSentence(), 3).shuffleGrouping("spout");
+    builder.setBolt("count", new WordCount(), 3).fieldsGrouping("split", new Fields("word"));
 
     Config conf = new Config();
     //conf.put
     conf.setDebug(true);
 
     if (args != null && args.length > 0) {
-      conf.setNumWorkers(3);
+      HashMap<String, String> assign_map = new HashMap<>();
+      assign_map.put("spout", "supervisor-cpu02");
+      assign_map.put("split", "supervisor-storage05");
+      assign_map.put("count", "supervisor-cpu13");
 
+      conf.setNumWorkers(3);
+      config.put("assigned_flag", "1");
+      config.put("design_map", assign_map);
       StormSubmitter.submitTopologyWithProgressBar(args[0], conf, builder.createTopology());
     }
     else {

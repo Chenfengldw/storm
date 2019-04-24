@@ -98,14 +98,10 @@ public class DirectScheduler implements IScheduler{
                     while (iterator.hasNext()){
                         componentName = iterator.next();
                         nodeName = (String)designMap.get(componentName);
-                        System.out.println("现在进行调度 组件名称->节点名称:" + componentName + "->" + nodeName);
-                        int slotIndex = 0;
-                        String slotStr = componentName + String.valueOf(slotIndex);
-                        while(usedSlots.contains((slotStr))){
-                            slotIndex++;
-                            slotStr = componentName + String.valueOf(slotIndex);
-                        }
-                        componentAssign(cluster, topology, componentToExecutors, componentName, nodeName, slotIndex);
+                        System.out.println("now scheduling component->node:" + componentName + "->" + nodeName);
+                    
+
+                        componentAssign(cluster, topology, componentToExecutors, componentName, nodeName);
                         usedSlots.add(slotStr);
                     }
                 }
@@ -126,7 +122,7 @@ public class DirectScheduler implements IScheduler{
      * @param supervisorName
      * name of nodes
      */
-    private void componentAssign(Cluster cluster, TopologyDetails topology, Map<String, List<ExecutorDetails>> componentToExecutors, String componentName, String supervisorName, int slotIndex){
+    private void componentAssign(Cluster cluster, TopologyDetails topology, Map<String, List<ExecutorDetails>> componentToExecutors, String componentName, String supervisorName){
         if (!componentToExecutors.containsKey(componentName)) {
             System.out.println(String.format("%s does not need scheduling.", componentName));
         } else {
@@ -157,6 +153,7 @@ public class DirectScheduler implements IScheduler{
             if (specialSupervisor != null) {
                 System.out.println("Found the special-supervisor");
                 List<WorkerSlot> availableSlots = cluster.getAvailableSlots(specialSupervisor);
+                int slotNumber = availableSlots.size();
 
                 // 如果目标节点上已经没有空闲的slot,则进行强制释放
                 if (availableSlots.isEmpty() && !executors.isEmpty()) {
@@ -167,11 +164,14 @@ public class DirectScheduler implements IScheduler{
 
                 // 重新获取可用的slot
                 availableSlots = cluster.getAvailableSlots(specialSupervisor);
-
-                // 选取节点上第一个slot,进行分配
-                cluster.assign(availableSlots.get(slotIndex), topology.getId(), executors);
+                int slotIndex = 0;
+                for(ExecutorDetails exe : executors){
+                    cluster.assign(availableSlots.get(slotIndex), topology.getId(), exe);
+                    slotIndex = (slotIndex+1)%slotNumber;
+                }
+                //cluster.assign(availableSlots.get(slotIndex), topology.getId(), executors);
                 //System.out.println("We have available slot:");
-                System.out.println("We assigned executors:" + executors + " to slot: [" + availableSlots.get(0).getNodeId() + ", " + availableSlots.get(0).getPort() + "]");
+                System.out.println("We assigned executors:" + executors + " to slot: [" + availableSlots.get(slotIndex).getNodeId() + ", " + availableSlots.get(0).getPort() + "]");
             } else {
                 System.out.println("There is no supervisor find!!!");
             }
