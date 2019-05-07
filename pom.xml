@@ -337,7 +337,7 @@
     </properties>
 
     <modules>
-        <module>storm-checkstyle</module>
+        <!-- <module>storm-checkstyle</module> -->
         <module>storm-multilang/javascript</module>
         <module>storm-multilang/python</module>
         <module>storm-multilang/ruby</module>
@@ -1222,43 +1222,7 @@
                         </execution>
                     </executions>
                 </plugin>
-                <plugin>
-                    <!--To support checkstyle goals. For example: "mvn checkstyle:checkstyle"-->
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-checkstyle-plugin</artifactId>
-                    <version>3.0.0</version>
-                    <dependencies>
-                        <dependency>
-                            <groupId>org.apache.storm</groupId>
-                            <artifactId>storm-checkstyle</artifactId>
-                            <version>${project.version}</version>
-                        </dependency>
-                        <dependency>
-                            <groupId>com.puppycrawl.tools</groupId>
-                            <artifactId>checkstyle</artifactId>
-                            <!-- If you change this, you should also update the storm_checkstyle.xml file to be
-                            based on the google_checks.xml from the version of checkstyle you are choosing. -->
-                            <version>8.2</version>
-                        </dependency>
-                    </dependencies>
-                    <executions>
-                        <execution>
-                            <id>validate</id>
-                            <phase>validate</phase>
-                            <configuration>
-                                <configLocation>storm/storm_checkstyle.xml</configLocation>
-                                <encoding>UTF-8</encoding>
-                                <failOnViolation>true</failOnViolation>
-                                <logViolationsToConsole>false</logViolationsToConsole>
-                                <outputFile>target/checkstyle-violation.xml</outputFile>
-                                <violationSeverity>warning</violationSeverity>
-                            </configuration>
-                            <goals>
-                                <goal>check</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
+                
                 <plugin>
                     <artifactId>maven-clean-plugin</artifactId>
                     <version>2.5</version>
