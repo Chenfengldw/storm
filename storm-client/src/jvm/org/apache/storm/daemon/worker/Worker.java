@@ -79,6 +79,8 @@ public class Worker implements Shutdownable, DaemonCommon {
     private final String workerId;
     private final LogConfigManager logConfigManager;
 
+    private WorkerScheduler workerScheduler = null;
+
 
     private WorkerState workerState;
     private AtomicReference<List<IRunningExecutor>> executorsAtom;
@@ -133,7 +135,7 @@ public class Worker implements Shutdownable, DaemonCommon {
     }
 
     public void start() throws Exception {
-        LOG.info("Launching worker for {} on {}:{} with id {} and conf {}", topologyId, assignmentId, port, workerId,
+        LOG.info("worker for {} on {}:{} with id {} and conf {}", topologyId, assignmentId, port, workerId,
                  ConfigUtils.maskPasswords(conf));
         // because in local mode, its not a separate
         // process. supervisor will register it in this case
@@ -222,6 +224,9 @@ public class Worker implements Shutdownable, DaemonCommon {
                 execs.add(executor);
             }
         }
+
+        workerScheduler = new WorkerScheduler(500, execs);
+        workerScheduler.startScheduling();
 
         List<IRunningExecutor> newExecutors = new ArrayList<IRunningExecutor>();
         for (Executor executor : execs) {

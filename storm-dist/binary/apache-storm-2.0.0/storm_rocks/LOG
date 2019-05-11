@@ -171,3 +171,16 @@
 2019/05/07-08:02:50.144334 7ff8386b0700 [db/version_set.cc:2512] Creating manifest 104
 2019/05/07-08:02:50.229364 7ff8386b0700 EVENT_LOG_v1 {"time_micros": 1557216170229359, "job": 1, "event": "recovery_finished"}
 2019/05/07-08:02:50.272592 7ff8386b0700 [db/db_impl_open.cc:1111] DB pointer 0x7ff830b71de0
+2019/05/07-09:35:51.478186 7ff6549d6700 [db/db_impl_write.cc:1150] [default] New memtable created with log file: #108. Immutable memtables: 0.
+2019/05/07-09:35:51.478389 7ff77f47c700 [db/db_impl_compaction_flush.cc:50] [JOB 3] Syncing log #105
+2019/05/07-09:35:51.519284 7ff77f47c700 (Original Log Time 2019/05/07-09:35:51.478348) [db/db_impl_compaction_flush.cc:1239] Calling FlushMemTableToOutputFile with column family [default], flush slots available 1, compaction slots available 1, flush slots scheduled 1, compaction slots scheduled 0
+2019/05/07-09:35:51.519290 7ff77f47c700 [db/flush_job.cc:264] [default] [JOB 3] Flushing memtable with next log file: 108
+2019/05/07-09:35:51.519342 7ff77f47c700 EVENT_LOG_v1 {"time_micros": 1557221751519331, "job": 3, "event": "flush_started", "num_memtables": 1, "num_entries": 63, "num_deletes": 0, "memory_usage": 11336}
+2019/05/07-09:35:51.519354 7ff77f47c700 [db/flush_job.cc:293] [default] [JOB 3] Level-0 flush table #109: started
+2019/05/07-09:35:51.553051 7ff77f47c700 EVENT_LOG_v1 {"time_micros": 1557221751553035, "cf_name": "default", "job": 3, "event": "table_file_creation", "file_number": 109, "file_size": 2908, "table_properties": {"data_size": 1293, "index_size": 2469, "filter_size": 0, "raw_key_size": 2714, "raw_average_key_size": 46, "raw_value_size": 2219, "raw_average_value_size": 37, "num_data_blocks": 2, "num_entries": 59, "filter_policy_name": "", "kDeletedKeys": "0", "kMergeOperands": "0"}}
+2019/05/07-09:35:51.553079 7ff77f47c700 [db/flush_job.cc:327] [default] [JOB 3] Level-0 flush table #109: 2908 bytes OK
+2019/05/07-09:35:51.594751 7ff77f47c700 (Original Log Time 2019/05/07-09:35:51.569573) [db/memtable_list.cc:369] [default] Level-0 commit table #109 started
+2019/05/07-09:35:51.594755 7ff77f47c700 (Original Log Time 2019/05/07-09:35:51.594677) [db/memtable_list.cc:392] [default] Level-0 commit table #109: memtable #1 done
+2019/05/07-09:35:51.594757 7ff77f47c700 (Original Log Time 2019/05/07-09:35:51.594700) EVENT_LOG_v1 {"time_micros": 1557221751594692, "job": 3, "event": "flush_finished", "lsm_state": [2, 1, 0, 0, 0, 0, 0], "immutable_memtables": 0}
+2019/05/07-09:35:51.594760 7ff77f47c700 (Original Log Time 2019/05/07-09:35:51.594722) [db/db_impl_compaction_flush.cc:140] [default] Level summary: base level 1 max bytes base 268435456 files[2 1 0 0 0 0 0] max score 0.50
+2019/05/07-09:35:51.594769 7ff77f47c700 [db/db_impl_files.cc:400] [JOB 3] Try to delete WAL files size 5138, prev total WAL file size 5138, number of live WAL files 2.

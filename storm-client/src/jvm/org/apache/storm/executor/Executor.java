@@ -216,6 +216,8 @@ public abstract class Executor implements Callable, JCQueue.Consumer {
         }
     }
 
+    
+
     /**
      * Retrieves all values of all static fields of {@link Config} which represent all available configuration keys through reflection. The
      * method assumes that they are {@code String}s through reflection.
@@ -239,6 +241,12 @@ public abstract class Executor implements Callable, JCQueue.Consumer {
         }
         return ret;
     }
+
+    public void setScheduleFlag(boolean flag){
+        executorTransfer.setScheduleFlag(flag);
+        LOG.info("Changing scheduler flag");
+    }
+
 
     public Queue<AddressedTuple> getPendingEmits() {
         return pendingEmits;
