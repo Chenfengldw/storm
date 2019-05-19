@@ -43,7 +43,7 @@ nimbus.seeds: ["cpu02.maas"]
 
 storm.scheduler: "org.apache.storm.scheduler.DirectScheduler"
 supervisor.scheduler.meta:
-     name: "supervisor-cpu02.maas"
+     name: "supervisor-storage05.maas"
 
 ui.port: 8080
 

@@ -75,6 +75,10 @@ public class ExecutorTransfer {
             return false;
         }
 
+        if(scheduleFlag == false){
+            return true;
+        }
+
         JCQueue localQueue = getLocalQueue(addressedTuple);
         if (localQueue != null) {
             return tryTransferLocal(addressedTuple, localQueue, pendingEmits);

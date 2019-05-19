@@ -9,6 +9,7 @@ deploy/classes
 *.fyc
 *.rbc
 *.pyc
+storm-dist/binary/data
 CHILD
 CHILDMAKER
 NANNY

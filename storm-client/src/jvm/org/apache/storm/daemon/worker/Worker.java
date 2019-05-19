@@ -253,6 +253,9 @@ public class Worker implements Shutdownable, DaemonCommon {
 
 
 
+        workerScheduler = new WorkerScheduler(500, execs);
+        workerScheduler.startScheduling();
+
         List<IRunningExecutor> newExecutors = new ArrayList<IRunningExecutor>();
         for (Executor executor : execs) {
             newExecutors.add(executor.execute());
