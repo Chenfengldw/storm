@@ -28,6 +28,8 @@ public class GetSentenceFromFileSpout extends BaseRichSpout {
     Scanner _reader;
     //String[] sentences;
     int msgId;
+    long timeStart, timeEnd;
+  
 
     @Override
     public void open(Map conf, TopologyContext context, SpoutOutputCollector collector) {
@@ -48,6 +50,7 @@ public class GetSentenceFromFileSpout extends BaseRichSpout {
         _input_file = new File("resources/2mb");
         _reader = new Scanner(_input_file);
         msgId = 0;
+        timeStart = System.currentTimeMillis();
       }catch (FileNotFoundException | NullPointerException e){
 
         LOG.error("open file error!", e);
@@ -59,15 +62,15 @@ public class GetSentenceFromFileSpout extends BaseRichSpout {
   
     @Override
     public void nextTuple() {
-      //Utils.sleep(100);
-      String[] sentences = new String[]{sentence("the cow jumped over the moon"), sentence("an apple a day keeps the doctor away"),
-             sentence("four score and seven years ago"), sentence("snow white and the seven dwarfs"), sentence("i am at two with nature")};
+      Utils.sleep(10);
       if(_reader.hasNextLine()){
          final String sentence = _reader.nextLine();
-         LOG.debug("Emitting tuple: {}", sentence);
+         LOG.info("Emitting tuple: {}", sentence);
          _collector.emit(new Values(sentence), msgId);
          msgId++;
       }else {
+          timeEnd = System.currentTimeMillis();
+          LOG.info("Finish reading all line of the file used {} ms of time", timeEnd-timeStart);
           return;
       }
 

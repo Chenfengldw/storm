@@ -79,6 +79,8 @@ public class Worker implements Shutdownable, DaemonCommon {
     private final String workerId;
     private final LogConfigManager logConfigManager;
 
+    private WorkerScheduler workerScheduler = null;
+
 
     private WorkerState workerState;
     private AtomicReference<List<IRunningExecutor>> executorsAtom;
@@ -133,7 +135,7 @@ public class Worker implements Shutdownable, DaemonCommon {
     }
 
     public void start() throws Exception {
-        LOG.info("Launching worker for {} on {}:{} with id {} and conf {}", topologyId, assignmentId, port, workerId,
+        LOG.info("worker for {} on {}:{} with id {} and conf {}", topologyId, assignmentId, port, workerId,
                  ConfigUtils.maskPasswords(conf));
         // because in local mode, its not a separate
         // process. supervisor will register it in this case
@@ -206,11 +208,20 @@ public class Worker implements Shutdownable, DaemonCommon {
 
         workerState.runWorkerStartHooks();
 
+
+
+        //collect which executor should be scheduled
+
         List<Executor> execs = new ArrayList<>();
+        List<Executor> execsToSchedule = new ArrayList<>();
         for (List<Long> e : workerState.getLocalExecutors()) {
             if (ConfigUtils.isLocalMode(topologyConf)) {
                 Executor executor = LocalExecutor.mkExecutor(workerState, e, initCreds);
                 execs.add(executor);
+                // component name ends with N means do not schedule it
+                if(executor.getComponentId().endsWith("S")){
+                    execsToSchedule.add(executor);
+                }
                 for (int i = 0; i < executor.getTaskIds().size(); ++i) {
                     workerState.localReceiveQueues.put(executor.getTaskIds().get(i), executor.getReceiveQueue());
                 }
@@ -220,8 +231,27 @@ public class Worker implements Shutdownable, DaemonCommon {
                     workerState.localReceiveQueues.put(executor.getTaskIds().get(i), executor.getReceiveQueue());
                 }
                 execs.add(executor);
+                if(executor.getComponentId().endsWith("S")){
+                    execsToSchedule.add(executor);
+                }
             }
         }
+        
+        //setup seheduler
+        int scheduleTime = 50;
+        try{
+            scheduleTime = Integer.parseInt((String)topologyConf.get("schedule_time"));
+        }catch (NumberFormatException e){
+            LOG.error("schedule time para format error!", e);
+            LOG.info("set schedule time to default 50ms");
+        }
+        
+        
+        workerScheduler = new WorkerScheduler(this.conf, scheduleTime, execsToSchedule);
+        workerScheduler.startScheduling();
+        LOG.info("start worker scheduler in worker");
+
+
 
         List<IRunningExecutor> newExecutors = new ArrayList<IRunningExecutor>();
         for (Executor executor : execs) {
@@ -258,7 +288,7 @@ public class Worker implements Shutdownable, DaemonCommon {
                                                                         // IOException from reading the version files to be ignored
                                                                         LOG.error(e.getStackTrace().toString());
                                                                     }
-                                                                }
+                                                                } 
         );
 
         // The jitter allows the clients to get the data at different times, and avoids thundering herd

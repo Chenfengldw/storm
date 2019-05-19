@@ -13,15 +13,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
-########### These MUST be filled in for a storm configuration
-
 storm.zookeeper.servers:
       - "cpu02.maas"
       - "cpu13.maas"
       - "storage05.maas"
 
-storm.zookeeper.root: "/storm-2.0"
+storm.zookeeper.root: "/storm-with-scheduler"
 storm.local.dir: "../data"
 
 
@@ -31,11 +28,18 @@ storm.local.dir: "../data"
 #     - "server2"
 #
 supervisor.slots.ports:
-     - 6200
-     - 6201
-     - 6202
+     - 6300
+     - 6301
+     - 6302
+     - 6303
+     - 6304
+     - 6305
+     - 6306
+     - 6307
+     - 6308
+     - 6309
 
-nimbus.seeds: ["storage05.maas"]
+nimbus.seeds: ["cpu02.maas"]
 
 storm.scheduler: "org.apache.storm.scheduler.DirectScheduler"
 supervisor.scheduler.meta:
@@ -45,9 +49,9 @@ ui.port: 8080
 
 topology.enable.classloader: false
 topology.transfer.buffer.size: 2048
-topology.transfer.batch.size: 1024
+#topology.transfer.batch.size: 1
 topology.disruptor.batch.timeout.millis: 1000
-
+########### These MUST be filled in for a storm configuration
 # storm.zookeeper.servers:
 #     - "server1"
 #     - "server2"
