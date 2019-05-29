@@ -17,6 +17,7 @@ import java.util.Random;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.concurrent.TimeUnit;
 
 
 public class GetSentenceFromFileSpout extends BaseRichSpout {
@@ -29,19 +30,20 @@ public class GetSentenceFromFileSpout extends BaseRichSpout {
     //String[] sentences;
     int msgId;
     long timeStart, timeEnd;
+    long sleepTime;
   
 
     @Override
     public void open(Map conf, TopologyContext context, SpoutOutputCollector collector) {
 
       
+      sleepTime = (Long)conf.get("sleep_time");
       _collector = collector;
       // sentences = InputSentence.text.split("\\.") 
       // msgId = 0;
 
       //String file_path = System.getProperty("user.dir") + "/resources/2mb";
       try{
-
         // List<String> re_list = getResourceFiles("/");
         // for (String name : re_list){
         //   System.out.println(name);
@@ -62,7 +64,13 @@ public class GetSentenceFromFileSpout extends BaseRichSpout {
   
     @Override
     public void nextTuple() {
-      Utils.sleep(10);
+      try{
+        TimeUnit.MICROSECONDS.sleep(sleepTime);
+      }catch (InterruptedException e){
+        LOG.error("spout sleep interrupted",e);
+      }
+      
+
       if(_reader.hasNextLine()){
          final String sentence = _reader.nextLine();
          LOG.info("Emitting tuple: {}", sentence);
