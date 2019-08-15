@@ -94,7 +94,15 @@ public class WordCountTopology {
         conf.setNumAckers(3);
         conf.put("assigned_flag", "1");
         conf.put("design_map", assign_map);
-        StormSubmitter.submitTopologyWithProgressBar(args[0], conf, builder.createTopology());
+
+
+        String topoName = String.format("schedule_time%s-sleep_time%s-batch_size%s",
+                      conf.get("schedule_time"), 
+                      conf.get("sleep_time"), 
+                      conf.get(Config.TOPOLOGY_TRANSFER_BATCH_SIZE) 
+                      );
+        StormSubmitter.submitTopologyWithProgressBar(topoName, conf, builder.createTopology());
+        //StormSubmitter.submitTopologyWithProgressBar(args[0], conf, builder.createTopology());
       }
       else {
         // conf.setMaxTaskParallelism(3);

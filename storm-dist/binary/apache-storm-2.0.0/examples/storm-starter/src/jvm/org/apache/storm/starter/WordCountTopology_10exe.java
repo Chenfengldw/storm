@@ -65,7 +65,7 @@ public class WordCountTopology_10exe {
         collector.emit(new Values(word, count));
       }
   
-      @Override
+      @Override 
       public void declareOutputFields(OutputFieldsDeclarer declarer) {
         declarer.declare(new Fields("word", "count"));
       }
@@ -74,10 +74,11 @@ public class WordCountTopology_10exe {
     public static void main(String[] args) throws Exception {
   
       TopologyBuilder builder = new TopologyBuilder();
+
+      int exec_num = 10;
   
       builder.setSpout("spout", new GetSentenceFromFileSpout(), 10);
-  
-      builder.setBolt("splitS", new SplitSentence(), 10).shuffleGrouping("spout");
+      builder.setBolt("splitS", new SplitSentence(), exec_num).shuffleGrouping("spout");
       builder.setBolt("countS", new WordCount(), 10).fieldsGrouping("splitS", new Fields("word"));
   
       Config conf = new Config();
@@ -95,12 +96,20 @@ public class WordCountTopology_10exe {
         conf.put("assigned_flag", "1");
         conf.put("design_map", assign_map);
 
+        conf.registerMetricsConsumer(org.apache.storm.metric.LoggingMetricsConsumer.class, 1);
+
         if(args.length > 1){
           conf.put("schedule_time", args[1]);
           if(args.length > 2){
             conf.put(Config.TOPOLOGY_PRODUCER_BATCH_SIZE, Integer.parseInt(args[2]));
             if(args.length > 3){
               conf.put(Config.TOPOLOGY_TRANSFER_BATCH_SIZE, Integer.parseInt(args[3]));
+              if(args.length > 4){
+                conf.put("sleep_time", Integer.parseInt(args[4]));
+              }
+              else{
+                conf.put("sleep_time", 10);
+              }
             }else{
               conf.put(Config.TOPOLOGY_TRANSFER_BATCH_SIZE, 128);
             }
@@ -111,7 +120,14 @@ public class WordCountTopology_10exe {
           conf.put("schedule_time", "50");
         }
 
-        StormSubmitter.submitTopologyWithProgressBar(args[0], conf, builder.createTopology());
+        String topoName = String.format("task%d_schedule_time%s-sleep_time%s-batch_size%s",
+                      exec_num,
+                      conf.get("schedule_time"), 
+                      conf.get("sleep_time"), 
+                      conf.get(Config.TOPOLOGY_TRANSFER_BATCH_SIZE) 
+                      );
+        StormSubmitter.submitTopologyWithProgressBar(topoName, conf, builder.createTopology());
+        //StormSubmitter.submitTopologyWithProgressBar(args[0], conf, builder.createTopology());
       }
       else {
         // conf.setMaxTaskParallelism(3);

@@ -64,16 +64,24 @@ public class GetSentenceFromFileSpout extends BaseRichSpout {
   
     @Override
     public void nextTuple() {
+      long startTime = System.nanoTime();
       try{
+
         TimeUnit.MICROSECONDS.sleep(sleepTime);
       }catch (InterruptedException e){
         LOG.error("spout sleep interrupted",e);
       }
       
-
+      long estimatedTime = System.nanoTime() - startTime;
+      LOG.info("slept for {} us before emit",estimatedTime/1000);
       if(_reader.hasNextLine()){
          final String sentence = _reader.nextLine();
-         LOG.info("Emitting tuple: {}", sentence);
+         
+         for (int i=0; i<500; ++i){
+           //sentence.append(" the");
+           sentence.concat(" the");
+         }
+         //LOG.info("Emitting tuple: {}", sentence);
          _collector.emit(new Values(sentence), msgId);
          msgId++;
       }else {
