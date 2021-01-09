@@ -1,0 +1,155 @@
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO] 
+[INFO] Storm Binary Distribution
+[INFO] storm-client-bin
+[INFO] storm-webapp-bin
+[INFO] storm-autocreds-bin
+[INFO] storm-sql-core-bin
+[INFO] storm-sql-runtime-bin
+[INFO] storm-submit-tools-bin
+[INFO] storm-kafka-monitor-bin
+[INFO] Storm Binary Distribution (Final Package)
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Storm Binary Distribution 2.0.0
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-enforcer-plugin:1.4.1:enforce (enforce-maven-version) @ apache-storm-bin ---
+[INFO] 
+[INFO] --- maven-remote-resources-plugin:1.5:process (process-resource-bundles) @ apache-storm-bin ---
+[WARNING] The POM for org.glassfish:javax.el:jar:3.0.1-b06-SNAPSHOT is missing, no dependency information available
+[WARNING] The POM for org.glassfish:javax.el:jar:3.0.1-b07-SNAPSHOT is missing, no dependency information available
+[WARNING] The POM for org.glassfish:javax.el:jar:3.0.1-b08-SNAPSHOT is missing, no dependency information available
+[WARNING] The POM for org.glassfish:javax.el:jar:3.0.1-b11-SNAPSHOT is missing, no dependency information available
+[INFO] 
+[INFO] --- license-maven-plugin:1.19:aggregate-add-third-party (generate-and-check-licenses) @ apache-storm-bin ---
+[INFO] skip flag is on, will skip goal.
+[INFO] 
+[INFO] --- maven-site-plugin:3.7.1:attach-descriptor (attach-descriptor) @ apache-storm-bin ---
+[INFO] No site descriptor found: nothing to attach.
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building storm-client-bin 2.0.0
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-enforcer-plugin:1.4.1:enforce (enforce-maven-version) @ storm-client-bin ---
+[INFO] 
+[INFO] --- maven-remote-resources-plugin:1.5:process (process-resource-bundles) @ storm-client-bin ---
+[INFO] 
+[INFO] --- maven-assembly-plugin:3.0.0:single (default) @ storm-client-bin ---
+[INFO] Reading assembly descriptor: /home/ubuntu/storm-with_scheduler/storm/storm-dist/binary/storm-client-bin/src/main/assembly/storm-client.xml
+[INFO] Copying files to /home/ubuntu/storm-with_scheduler/storm/storm-dist/binary/storm-client-bin/target/client
+[INFO] 
+[INFO] --- maven-site-plugin:3.7.1:attach-descriptor (attach-descriptor) @ storm-client-bin ---
+[INFO] No site descriptor found: nothing to attach.
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building storm-webapp-bin 2.0.0
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-enforcer-plugin:1.4.1:enforce (enforce-maven-version) @ storm-webapp-bin ---
+[INFO] 
+[INFO] --- maven-remote-resources-plugin:1.5:process (process-resource-bundles) @ storm-webapp-bin ---
+[INFO] 
+[INFO] --- maven-assembly-plugin:3.0.0:single (default) @ storm-webapp-bin ---
+[INFO] Reading assembly descriptor: /home/ubuntu/storm-with_scheduler/storm/storm-dist/binary/storm-webapp-bin/src/main/assembly/storm-webapp.xml
+[WARNING] The following patterns were never triggered in this artifact exclusion filter:
+o  'org.glassfish.jersey.ext:jersey-metainf-services'
+o  'org.glassfish.jersey.ext:jersey-bean-validation'
+
+[INFO] Copying files to /home/ubuntu/storm-with_scheduler/storm/storm-dist/binary/storm-webapp-bin/target/webapp
+[INFO] 
+[INFO] --- maven-site-plugin:3.7.1:attach-descriptor (attach-descriptor) @ storm-webapp-bin ---
+[INFO] No site descriptor found: nothing to attach.
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building storm-autocreds-bin 2.0.0
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-enforcer-plugin:1.4.1:enforce (enforce-maven-version) @ storm-autocreds-bin ---
+[INFO] 
+[INFO] --- maven-remote-resources-plugin:1.5:process (process-resource-bundles) @ storm-autocreds-bin ---
+[INFO] 
+[INFO] --- maven-assembly-plugin:3.0.0:single (default) @ storm-autocreds-bin ---
+[INFO] Reading assembly descriptor: /home/ubuntu/storm-with_scheduler/storm/storm-dist/binary/storm-autocreds-bin/src/main/assembly/storm-autocreds.xml
+[INFO] Copying files to /home/ubuntu/storm-with_scheduler/storm/storm-dist/binary/storm-autocreds-bin/target/autocreds
+[INFO] 
+[INFO] --- maven-site-plugin:3.7.1:attach-descriptor (attach-descriptor) @ storm-autocreds-bin ---
+[INFO] No site descriptor found: nothing to attach.
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building storm-sql-core-bin 2.0.0
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-enforcer-plugin:1.4.1:enforce (enforce-maven-version) @ storm-sql-core-bin ---
+[INFO] 
+[INFO] --- maven-remote-resources-plugin:1.5:process (process-resource-bundles) @ storm-sql-core-bin ---
+[INFO] 
+[INFO] --- maven-assembly-plugin:3.0.0:single (default) @ storm-sql-core-bin ---
+[INFO] Reading assembly descriptor: /home/ubuntu/storm-with_scheduler/storm/storm-dist/binary/storm-sql-core-bin/src/main/assembly/storm-sql-core.xml
+[INFO] Copying files to /home/ubuntu/storm-with_scheduler/storm/storm-dist/binary/storm-sql-core-bin/target/sql-core
+[INFO] 
+[INFO] --- maven-site-plugin:3.7.1:attach-descriptor (attach-descriptor) @ storm-sql-core-bin ---
+[INFO] No site descriptor found: nothing to attach.
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building storm-sql-runtime-bin 2.0.0
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-enforcer-plugin:1.4.1:enforce (enforce-maven-version) @ storm-sql-runtime-bin ---
+[INFO] 
+[INFO] --- maven-remote-resources-plugin:1.5:process (process-resource-bundles) @ storm-sql-runtime-bin ---
+[INFO] 
+[INFO] --- maven-assembly-plugin:3.0.0:single (default) @ storm-sql-runtime-bin ---
+[INFO] Reading assembly descriptor: /home/ubuntu/storm-with_scheduler/storm/storm-dist/binary/storm-sql-runtime-bin/src/main/assembly/storm-sql-runtime.xml
+[INFO] Copying files to /home/ubuntu/storm-with_scheduler/storm/storm-dist/binary/storm-sql-runtime-bin/target/sql-runtime
+[INFO] 
+[INFO] --- maven-site-plugin:3.7.1:attach-descriptor (attach-descriptor) @ storm-sql-runtime-bin ---
+[INFO] No site descriptor found: nothing to attach.
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building storm-submit-tools-bin 2.0.0
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-enforcer-plugin:1.4.1:enforce (enforce-maven-version) @ storm-submit-tools-bin ---
+[INFO] 
+[INFO] --- maven-remote-resources-plugin:1.5:process (process-resource-bundles) @ storm-submit-tools-bin ---
+[INFO] 
+[INFO] --- maven-assembly-plugin:3.0.0:single (default) @ storm-submit-tools-bin ---
+[INFO] Reading assembly descriptor: /home/ubuntu/storm-with_scheduler/storm/storm-dist/binary/storm-submit-tools-bin/src/main/assembly/storm-submit-tools.xml
+[INFO] Copying files to /home/ubuntu/storm-with_scheduler/storm/storm-dist/binary/storm-submit-tools-bin/target/submit-tools
+[INFO] 
+[INFO] --- maven-site-plugin:3.7.1:attach-descriptor (attach-descriptor) @ storm-submit-tools-bin ---
+[INFO] No site descriptor found: nothing to attach.
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building storm-kafka-monitor-bin 2.0.0
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-enforcer-plugin:1.4.1:enforce (enforce-maven-version) @ storm-kafka-monitor-bin ---
+[INFO] 
+[INFO] --- maven-remote-resources-plugin:1.5:process (process-resource-bundles) @ storm-kafka-monitor-bin ---
+[INFO] 
+[INFO] --- maven-assembly-plugin:3.0.0:single (default) @ storm-kafka-monitor-bin ---
+[INFO] Reading assembly descriptor: /home/ubuntu/storm-with_scheduler/storm/storm-dist/binary/storm-kafka-monitor-bin/src/main/assembly/storm-kafka-monitor.xml
+[INFO] Copying files to /home/ubuntu/storm-with_scheduler/storm/storm-dist/binary/storm-kafka-monitor-bin/target/kafka-monitor
+[INFO] 
+[INFO] --- maven-site-plugin:3.7.1:attach-descriptor (attach-descriptor) @ storm-kafka-monitor-bin ---
+[INFO] No site descriptor found: nothing to attach.
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Storm Binary Distribution (Final Package) 2.0.0
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-enforcer-plugin:1.4.1:enforce (enforce-maven-version) @ final-package ---
+[INFO] 
+[INFO] --- maven-remote-resources-plugin:1.5:process (process-resource-bundles) @ final-package ---
+[INFO] 
+[INFO] --- maven-site-plugin:3.7.1:attach-descriptor (attach-descriptor) @ final-package ---
+[INFO] No site descriptor found: nothing to attach.
+[INFO] 
+[INFO] --- maven-assembly-plugin:3.0.0:single (default) @ final-package ---
+[INFO] Reading assembly descriptor: /home/ubuntu/storm-with_scheduler/storm/storm-dist/binary/final-package/src/main/assembly/binary.xml
+[INFO] Building tar: /home/ubuntu/storm-with_scheduler/storm/storm-dist/binary/final-package/target/apache-storm-2.0.0.tar.gz
