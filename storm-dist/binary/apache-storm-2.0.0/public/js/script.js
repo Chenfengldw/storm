@@ -284,7 +284,7 @@ function getStatic(url, cb) {
     return $.ajax({
         url: url,
         data: {
-            '_ts': '201905061516'
+            '_ts': '201905181605'
         },
         success: cb
     });

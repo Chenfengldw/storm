@@ -79,6 +79,8 @@ public class Worker implements Shutdownable, DaemonCommon {
     private final String workerId;
     private final LogConfigManager logConfigManager;
 
+    private WorkerScheduler workerScheduler = null;
+
 
     private WorkerState workerState;
     private AtomicReference<List<IRunningExecutor>> executorsAtom;
@@ -133,7 +135,7 @@ public class Worker implements Shutdownable, DaemonCommon {
     }
 
     public void start() throws Exception {
-        LOG.info("Launching worker for {} on {}:{} with id {} and conf {}", topologyId, assignmentId, port, workerId,
+        LOG.info("worker for {} on {}:{} with id {} and conf {}", topologyId, assignmentId, port, workerId,
                  ConfigUtils.maskPasswords(conf));
         // because in local mode, its not a separate
         // process. supervisor will register it in this case
@@ -223,6 +225,10 @@ public class Worker implements Shutdownable, DaemonCommon {
             }
         }
 
+        workerScheduler = new WorkerScheduler(this.conf, 50, execs);
+        workerScheduler.startScheduling();
+        LOG.info("start worker scheduler in worker");
+
         List<IRunningExecutor> newExecutors = new ArrayList<IRunningExecutor>();
         for (Executor executor : execs) {
             newExecutors.add(executor.execute());
@@ -258,7 +264,7 @@ public class Worker implements Shutdownable, DaemonCommon {
                                                                         // IOException from reading the version files to be ignored
                                                                         LOG.error(e.getStackTrace().toString());
                                                                     }
-                                                                }
+                                                                } 
         );
 
         // The jitter allows the clients to get the data at different times, and avoids thundering herd

@@ -50,6 +50,7 @@ class WorkerTransfer implements JCQueue.Consumer {
     private AtomicBoolean[] remoteBackPressureStatus; // [[remoteTaskId] -> true/false : indicates if remote task is under BP.
 
     public WorkerTransfer(WorkerState workerState, Map<String, Object> topologyConf, int maxTaskIdInTopo) {
+        LOG.info("created WorkerTransfer");
         this.workerState = workerState;
         this.backPressureWaitStrategy = IWaitStrategy.createBackPressureWaitStrategy(topologyConf);
         this.drainer = new TransferDrainer();

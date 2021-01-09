@@ -28,7 +28,11 @@ import org.slf4j.LoggerFactory;
 
 // Every executor has an instance of this class
 public class ExecutorTransfer {
+
+
     private static final Logger LOG = LoggerFactory.getLogger(ExecutorTransfer.class);
+
+    public boolean scheduleFlag = true;
 
     private final WorkerState workerData;
     private final KryoTupleSerializer serializer;
@@ -45,6 +49,12 @@ public class ExecutorTransfer {
         this.isDebug = ObjectReader.getBoolean(topoConf.get(Config.TOPOLOGY_DEBUG), false);
     }
 
+     //flag = true means scheduler let this executor transmit and vise versa.
+     public void setScheduleFlag(boolean flag){
+        scheduleFlag = flag;
+        LOG.info(String.format("set scheduler flag to %b", flag));
+    }
+
     // to be called after all Executor objects in the worker are created and before this object is used
     public void initLocalRecvQueues() {
         Integer minTaskId = workerData.getLocalReceiveQueues().keySet().stream().min(Integer::compareTo).get();
@@ -57,6 +67,13 @@ public class ExecutorTransfer {
     public boolean tryTransfer(AddressedTuple addressedTuple, Queue<AddressedTuple> pendingEmits) {
         if (isDebug) {
             LOG.info("TRANSFERRING tuple {}", addressedTuple);
+            LOG.info("schedule flag is  {}", scheduleFlag);
+            LOG.info("this is new version of code");
+        }
+
+        if(scheduleFlag == false){
+            LOG.info("tryTransfer will return with false");            
+            return false;
         }
 
         JCQueue localQueue = getLocalQueue(addressedTuple);
